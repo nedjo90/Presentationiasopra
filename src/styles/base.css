@@ -1,0 +1,144 @@
+/* Base : scène 16:9, panneaux, HUD, apparence des outils réels. */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 100%; height: 100%; background: #000; overflow: hidden; }
+body {
+  font-family: var(--font-sans);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  cursor: default;
+  user-select: none;
+}
+body.preview { cursor: none; }
+
+#viewport { position: fixed; inset: 0; background: #000; }
+#stage {
+  position: absolute; left: 50%; top: 50%;
+  width: 1920px; height: 1080px;
+  transform-origin: 50% 50%;
+  background: var(--bg);
+  overflow: hidden;
+}
+#gl { position: absolute; inset: 0; display: block; }
+#layers, #labels, #overlays { position: absolute; inset: 0; pointer-events: none; }
+#labels { z-index: 2; }
+#layers { z-index: 3; }
+#overlays { z-index: 4; }
+.layer { position: absolute; inset: 0; }
+.layer .interactive, .interactive { pointer-events: auto; }
+#blackout { position: absolute; inset: 0; background: #000; opacity: 0; pointer-events: none; z-index: 50; }
+
+.anchor { position: absolute; left: 0; top: 0; will-change: transform; pointer-events: none; }
+.anchor > * { width: max-content; }
+
+.mono { font-family: var(--font-mono); }
+
+/* Panneau semi-transparent, lignes fines, coins de construction */
+.panel {
+  position: absolute;
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 28px 32px;
+}
+.panel::before, .panel::after {
+  content: ''; position: absolute; width: 14px; height: 14px; pointer-events: none;
+  border-color: var(--accent-2); border-style: solid;
+}
+.panel::before { left: -1px; top: -1px; border-width: 2px 0 0 2px; }
+.panel::after { right: -1px; bottom: -1px; border-width: 0 2px 2px 0; }
+.panel-tag {
+  font-family: var(--font-mono);
+  font-size: 15px; letter-spacing: 0.18em;
+  color: var(--text-dim);
+  margin-bottom: 14px;
+  text-transform: uppercase;
+}
+
+.logo-img { height: 46px; width: auto; display: block; }
+
+/* ------------------------------------------------------------------ HUD */
+#hud { position: fixed; inset: 0; pointer-events: none; z-index: 100; }
+.hud-progress { position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: transparent; }
+.hud-bar { height: 100%; width: 0; background: var(--accent); opacity: 0.35; transition: width 0.6s ease; }
+.hud-flash {
+  position: absolute; right: 24px; bottom: 18px;
+  font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.1em;
+  color: var(--text-dim); opacity: 0;
+}
+.hud-help {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  background: rgba(0, 0, 0, 0.7); opacity: 0; pointer-events: none; transition: opacity 0.3s;
+}
+.hud-help.on { opacity: 1; pointer-events: auto; }
+.hud-help-inner {
+  background: #0d0a10; border: 1px solid var(--panel-border); padding: 32px 40px; min-width: 520px;
+}
+.hud-help-title { font-family: var(--font-mono); letter-spacing: 0.2em; color: var(--accent-2); font-size: 13px; margin-bottom: 18px; text-transform: uppercase; }
+.hud-row { display: flex; gap: 24px; padding: 6px 0; font-size: 15px; color: var(--text-dim); border-bottom: 1px solid var(--line-faint); }
+.hud-row kbd { font-family: var(--font-mono); color: var(--text); min-width: 210px; }
+.hud-help-foot { margin-top: 16px; font-size: 13px; color: var(--text-faint); }
+
+.gesture-cam {
+  position: fixed; right: 12px; bottom: 12px; width: 160px; height: 90px; object-fit: cover;
+  transform: scaleX(-1); opacity: 0.35; border: 1px solid var(--panel-border); z-index: 99;
+}
+
+/* ------------------------------------------------------------------ OUTILLAGE RÉEL
+   Ces écrans gardent leur apparence d'origine (hors charte), comme demandé. */
+.tool-terminal {
+  background: var(--tool-terminal-bg);
+  color: var(--tool-terminal-fg);
+  font-family: var(--font-mono);
+  border: 1px solid #2b2b2b;
+  border-radius: 10px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+}
+.tt-bar {
+  height: 38px; display: flex; align-items: center; gap: 8px; padding: 0 14px;
+  background: #1c1c1c; border-bottom: 1px solid #2b2b2b; color: #8a8a8a; font-size: 14px;
+}
+.tt-bar i { width: 12px; height: 12px; border-radius: 50%; background: #ff5f57; display: inline-block; }
+.tt-bar i:nth-child(2) { background: #febc2e; }
+.tt-bar i:nth-child(3) { background: #28c840; }
+.tt-bar span { margin-left: 12px; }
+
+.tool-vscode {
+  background: var(--tool-vscode-bg);
+  color: var(--tool-vscode-fg);
+  font-family: var(--font-mono);
+  border: 1px solid #333;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+}
+.tv-tab {
+  height: 38px; display: flex; align-items: center; padding: 0 16px;
+  background: var(--tool-vscode-side); color: #ccc; font-size: 14px;
+  border-bottom: 1px solid #333; border-top: 2px solid #007acc;
+}
+.tool-vscode i.k { color: var(--tool-vscode-kw); font-style: normal; }
+.tool-vscode i.s { color: var(--tool-vscode-str); font-style: normal; }
+
+.tool-jira {
+  background: var(--tool-jira-bg); color: #172b4d; border-radius: 8px;
+  font-family: -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+}
+
+.tool-fiori {
+  background: #f5f6f7; color: #1d2d3e; border-radius: 10px; overflow: hidden;
+  font-family: '72', -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  box-shadow: 0 40px 120px rgba(0, 0, 0, 0.7);
+}
+
+/* Badge des placeholders [FICTIF] */
+.fictif {
+  display: inline-block; vertical-align: middle; margin-right: 0.4em;
+  font-family: var(--font-mono); font-size: 11px; line-height: 1; letter-spacing: 0.12em;
+  text-transform: uppercase; font-weight: 400; font-style: normal;
+  color: var(--text-dim); border: 1px dashed currentColor; padding: 3px 5px; opacity: 0.75;
+  -webkit-text-fill-color: currentColor;
+}

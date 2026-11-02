@@ -1,0 +1,41 @@
+# Reconstruit le site publié (dossier docs/) à chaque modification sur main,
+# par exemple après une édition de src/content/content.json directement sur GitHub.
+# GitHub Pages (Settings → Pages → Deploy from a branch → main) publie ensuite le résultat.
+name: Construire le site (docs/)
+
+on:
+  push:
+    branches: [main]
+    paths-ignore: ['docs/**']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-docs
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run check
+      - run: npm run build
+      - name: Valider docs/ si le site a changé
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898732+github-actions[bot]@users.noreply.github.com"
+          git add -A docs
+          if git diff --cached --quiet; then
+            echo "docs/ déjà à jour"
+          else
+            git commit -m "Reconstruction du site (docs/)"
+            git push
+          fi

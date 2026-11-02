@@ -1,0 +1,26 @@
+{
+  "name": "hello-claude-presentation",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Hello, Claude — présentation immersive pilotée en direct (Sopra Steria × CFL)",
+  "type": "module",
+  "scripts": {
+    "start": "vite --open",
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview --open",
+    "check": "node scripts/check-content.mjs",
+    "postinstall": "node scripts/setup-gestures.mjs",
+    "verify": "node scripts/verify.mjs"
+  },
+  "dependencies": {
+    "@fontsource/jetbrains-mono": "^5.3.0",
+    "@fontsource/outfit": "^5.3.0",
+    "@mediapipe/tasks-vision": "^1.2.0",
+    "gsap": "^3.15.0",
+    "three": "^0.187.0"
+  },
+  "devDependencies": {
+    "vite": "^8.3.5"
+  }
+}
