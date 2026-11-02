@@ -1,0 +1,108 @@
+/* ==========================================================================
+   THÈME — fichier unique de charte graphique
+   --------------------------------------------------------------------------
+   Toutes les couleurs, polices et le logo de la présentation sont définis ici.
+   Les effets 3D (Three.js) et la pluie de code lisent ces mêmes variables
+   au démarrage (voir src/theme/theme.js) : changer une valeur ici change
+   toute la présentation.
+
+   Sources (relevées sur https://www.soprasteria.com, nov. 2026) :
+   - Logo officiel : /ResourcePackages/Bootstrap4/assets/dist/logos/logo-soprasteria.svg
+       symbole rouge #DE1823, symbole orange #F67200, logotype #231F20
+   - Feuille de style style-ssg.css : couleurs les plus utilisées
+       #2a1449 (violet profond), #a60726 (rouge foncé), #ef7d00 (orange),
+       #e4302d / #ce2935 (rouges), #8b1d82 (prune), #9179b1 (lavande)
+   - Polices : Hurme Geometric Sans 3 / 4, Albra Display (commerciales)
+   ========================================================================== */
+
+/* Polices officielles (si les fichiers sous licence sont déposés dans public/brand/fonts) */
+@font-face {
+  font-family: 'Hurme Geometric Sans 3';
+  src: url('/brand/fonts/HurmeGeometricSans3-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Hurme Geometric Sans 3';
+  src: url('/brand/fonts/HurmeGeometricSans3-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Hurme Geometric Sans 4';
+  src: url('/brand/fonts/HurmeGeometricSans4-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-display: swap;
+}
+
+:root {
+  /* --- Couleurs de la charte -------------------------------------------- */
+  --ss-red: #de1823;          /* symbole du logo — accent principal          */
+  --ss-orange: #f67200;       /* symbole du logo — accent secondaire          */
+  --ss-red-dark: #a60726;     /* rouge foncé du site                          */
+  --ss-red-bright: #e4302d;   /* rouge vif du site                            */
+  --ss-orange-web: #ef7d00;   /* orange du site                               */
+  --ss-purple: #2a1449;       /* violet profond du site                       */
+  --ss-plum: #8b1d82;         /* prune du site                                */
+  --ss-lavender: #9179b1;     /* lavande du site                              */
+  --ss-grey-logo: #231f20;    /* gris du logotype                             */
+  --ss-grey: #979797;         /* gris neutre du site                          */
+  --ss-grey-light: #dcdcdc;   /* gris clair du site                           */
+
+  /* --- Rôles (à utiliser dans le code, jamais les couleurs brutes) ------- */
+  --bg: #050405;              /* noir profond                                 */
+  --bg-elev: rgba(255, 255, 255, 0.035);
+  --panel: rgba(18, 14, 22, 0.62);
+  --panel-border: rgba(255, 255, 255, 0.14);
+  --line: rgba(255, 255, 255, 0.22);
+  --line-faint: rgba(255, 255, 255, 0.08);
+  --text: #f4f2f5;
+  --text-dim: #a29fa6;
+  --text-faint: #5f5b63;
+  --accent: var(--ss-red);
+  --accent-2: var(--ss-orange);
+  --accent-3: var(--ss-lavender);
+  --accent-deep: var(--ss-purple);
+  --ok: #f67200;              /* les états « positifs » restent dans la charte */
+
+  /* Pluie de code (acte 2) — combinaison de la charte */
+  --rain-1: var(--ss-red);
+  --rain-2: var(--ss-orange);
+  --rain-3: var(--ss-lavender);
+  --rain-4: #ffffff;
+
+  /* Couleurs 3D du bureau (acte 4, « en couleur ») */
+  --office-floor: #241a2e;
+  --office-desk: #4a3a5c;
+  --office-wall: #2a1449;
+  --person-1: var(--ss-red);
+  --person-2: var(--ss-orange);
+  --person-3: var(--ss-lavender);
+  --person-4: var(--ss-plum);
+  --person-5: var(--ss-red-bright);
+  --claude-glow: var(--ss-orange);
+
+  /* --- Typographie ------------------------------------------------------- */
+  --font-sans: 'Hurme Geometric Sans 3', 'Hurme Geometric Sans 4', 'Outfit', system-ui, sans-serif;
+  --font-display: 'Hurme Geometric Sans 4', 'Hurme Geometric Sans 3', 'Outfit', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+
+  /* --- Logo -------------------------------------------------------------- */
+  --logo-on-dark: url('/brand/logo-soprasteria-negatif.svg');
+  --logo-on-light: url('/brand/logo-soprasteria.svg');
+
+  /* --- Outillage réel (garde son apparence d'origine, hors charte) ------- */
+  --tool-terminal-bg: #0c0c0c;
+  --tool-terminal-fg: #e6e6e6;
+  --tool-claude: #d97757;     /* couleur d'origine de Claude Code            */
+  --tool-vscode-bg: #1e1e1e;
+  --tool-vscode-side: #252526;
+  --tool-vscode-fg: #d4d4d4;
+  --tool-vscode-kw: #569cd6;
+  --tool-vscode-str: #ce9178;
+  --tool-vscode-com: #6a9955;
+  --tool-vscode-fn: #dcdcaa;
+  --tool-vscode-type: #4ec9b0;
+  --tool-jira-bg: #f4f5f7;
+  --tool-jira-blue: #0052cc;
+}
