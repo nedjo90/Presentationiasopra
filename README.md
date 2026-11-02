@@ -35,6 +35,7 @@ par ex. `http://localhost:5173/#22` (étape 22 = début de l'acte 4).
 |---|---|
 | **→**, **Page Down**, **Espace**, **Entrée**, clic télécommande, clic souris | étape suivante |
 | **←**, **Page Up**, clic droit | étape précédente |
+| *Téléphone / tablette* : tap ou balayage vers la gauche / balayage vers la droite | suivante / précédente (tenir l'appareil à l'horizontale) |
 | **1** à **5** | saut direct au début d'un acte (secours) |
 | **R** | redémarrer l'acte en cours |
 | **B** (ou **.**, touche « écran noir » des télécommandes) | écran noir — l'étape suivante le retire |

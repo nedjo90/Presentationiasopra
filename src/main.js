@@ -170,6 +170,24 @@ if (!PREVIEW) {
     command('next');
   });
   document.getElementById('viewport').addEventListener('contextmenu', (e) => { e.preventDefault(); command('prev'); });
+
+  // Téléphone / tablette : tap = suivant, balayage vers la gauche = suivant, vers la droite = précédent
+  let touch = null;
+  window.addEventListener('touchstart', (e) => {
+    const t = e.changedTouches[0];
+    touch = { x: t.clientX, y: t.clientY };
+  }, { passive: true });
+  window.addEventListener('touchend', (e) => {
+    if (!touch) return;
+    const t = e.changedTouches[0];
+    const dx = t.clientX - touch.x;
+    const dy = t.clientY - touch.y;
+    touch = null;
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+      e.preventDefault(); // pas de clic fantôme après un balayage
+      command(dx < 0 ? 'next' : 'prev');
+    }
+  });
 }
 
 // ------------------------------------------------------------------ démarrage
