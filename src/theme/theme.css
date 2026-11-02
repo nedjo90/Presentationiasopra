@@ -15,25 +15,14 @@
    - Polices : Hurme Geometric Sans 3 / 4, Albra Display (commerciales)
    ========================================================================== */
 
-/* Polices officielles (si les fichiers sous licence sont déposés dans public/brand/fonts) */
-@font-face {
-  font-family: 'Hurme Geometric Sans 3';
-  src: url('/brand/fonts/HurmeGeometricSans3-Regular.woff2') format('woff2');
-  font-weight: 400;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Hurme Geometric Sans 3';
-  src: url('/brand/fonts/HurmeGeometricSans3-Bold.woff2') format('woff2');
-  font-weight: 700;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Hurme Geometric Sans 4';
-  src: url('/brand/fonts/HurmeGeometricSans4-SemiBold.woff2') format('woff2');
-  font-weight: 600;
-  font-display: swap;
-}
+/* Polices officielles (commerciales, non fournies).
+   Pour les activer : déposer les fichiers dans public/brand/fonts/ puis décommenter
+   ce bloc (laissé commenté pour éviter des erreurs 404 tant qu'ils sont absents).
+
+@font-face { font-family: 'Hurme Geometric Sans 3'; src: url('/brand/fonts/HurmeGeometricSans3-Regular.woff2') format('woff2'); font-weight: 400; font-display: swap; }
+@font-face { font-family: 'Hurme Geometric Sans 3'; src: url('/brand/fonts/HurmeGeometricSans3-Bold.woff2') format('woff2'); font-weight: 700; font-display: swap; }
+@font-face { font-family: 'Hurme Geometric Sans 4'; src: url('/brand/fonts/HurmeGeometricSans4-SemiBold.woff2') format('woff2'); font-weight: 600; font-display: swap; }
+*/
 
 :root {
   /* --- Couleurs de la charte -------------------------------------------- */

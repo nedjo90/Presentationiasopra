@@ -113,7 +113,7 @@ Les valeurs ont été **extraites du site officiel https://www.soprasteria.com**
 Fichiers officiels : dossier **`public/brand/`** (voir son README) — logo d'origine et
 sa version négative (logotype blanc) pour fond noir. Les polices Hurme Geometric Sans sont
 commerciales et ne sont pas redistribuées : déposer les fichiers sous licence dans
-`public/brand/fonts/` et elles seront utilisées automatiquement (sinon : **Outfit**, police
+`public/brand/fonts/` et décommenter le bloc `@font-face` de `theme.css` (sinon : **Outfit**, police
 géométrique libre embarquée).
 
 Exception voulue : les écrans qui montrent l'**outillage réel** (terminal Claude Code,
@@ -132,21 +132,24 @@ MediaPipe Hands détecte les mains, entièrement en local.
 | main ouverte immobile ≈ 1 s | ouvre / ferme le panneau d'exemple (acte 3) ou le mur de sessions (acte 4) |
 
 Aucun geste ne fait avancer la présentation : la télécommande reste le moyen principal.
-Le modèle (`public/mediapipe/hand_landmarker.task`) est versionné ; les fichiers WASM sont
-copiés depuis `node_modules` par `npm install`. La webcam demande une page servie en
+Le modèle (`public/mediapipe/hand_landmarker.task`) est versionné ; le fichier WASM (version
+SIMD, tous navigateurs récents) est copié depuis `node_modules` par `npm install`. La webcam demande une page servie en
 `localhost` ou en HTTPS (c'est le cas avec `npm start`, `npm run serve` et GitHub Pages).
 
 ## Déploiement GitHub Pages
 
-Le workflow `.github/workflows/deploy.yml` construit et publie automatiquement à chaque
-push sur `main`. À faire une fois : *Settings → Pages → Source : GitHub Actions*.
-Les chemins sont relatifs (`base: './'`) : le dossier `dist/` fonctionne sous n'importe
-quel sous-chemin.
+Adresse : **https://nedjo90.github.io/Presentationiasopra/** (ouvrable sur téléphone, en paysage).
+
+- Réglage du dépôt : *Settings → Pages → Deploy from a branch → `main`* (dossier `/ (root)` ou `/docs`, les deux fonctionnent).
+- Le site construit est versionné dans **`docs/`**. L'`index.html` à la racine redirige vers `docs/`.
+- Après une modification (par ex. de `content.json`) : `npm run build` puis commit de `docs/`.
+  Si la modification est faite directement sur `main` (y compris depuis l'interface GitHub),
+  le workflow `.github/workflows/deploy.yml` reconstruit et valide `docs/` automatiquement.
 
 ## Vérification automatique
 
 ```bash
-npm run build && npx vite preview --port 4173 &
+npm run build && npx vite preview --port 4173 &   # sert docs/
 npm run verify           # nécessite Playwright installé sur la machine
 ```
 
@@ -157,7 +160,9 @@ mur de sessions — et échoue à la moindre erreur JavaScript.
 ## Structure
 
 ```
-index.html / presenter.html     fenêtre principale / vue présentateur
+app/index.html, app/presenter.html   fenêtre principale / vue présentateur (sources)
+docs/                           site construit, publié par GitHub Pages (ne pas éditer à la main)
+index.html                      redirection racine → docs/
 src/content/content.json        TOUT le contenu (textes, speechs, chiffres, code)
 src/theme/theme.css             TOUTE la charte (couleurs, polices, logo)
 src/engine/                     moteur d'étapes, sons, étiquettes 3D, gestes, HUD
@@ -194,3 +199,5 @@ Décisions prises là où le cahier des charges laissait un détail ouvert :
 13. **Code affiché** : entièrement fictif, sur le thème générique « ingestion de factures par mail » (aucun code du projet client).
 14. **Vue présentateur** : l'aperçu de l'étape suivante est un vrai rendu miniature (basse résolution, 15 i/s) pour ne pas pénaliser la fenêtre principale.
 15. Les placeholders `[FICTIF]` s'affichent avec un badge discret plutôt qu'en texte brut, pour rester lisibles en répétition sans casser la mise en page.
+16. **Publication** : GitHub Pages est configuré en « Deploy from a branch » ; le site construit est donc versionné dans `docs/` (avec redirection depuis la racine) plutôt que publié par une Action.
+17. **Téléphone / tablette** : tap ou balayage pour naviguer ; l'aide clavier n'est pas affichée sur écran tactile.

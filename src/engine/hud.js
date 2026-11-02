@@ -21,7 +21,8 @@ export class Hud {
     this.engine = engine;
     // L'aide s'affiche une fois au premier lancement (disparaît au premier clic)
     try {
-      if (!localStorage.getItem('hc-help-seen')) {
+      const touch = matchMedia('(pointer: coarse)').matches; // pas d'aide clavier sur téléphone
+      if (!touch && !localStorage.getItem('hc-help-seen')) {
         this.toggleHelp(true);
         localStorage.setItem('hc-help-seen', '1');
         setTimeout(() => this.toggleHelp(false), 6000);

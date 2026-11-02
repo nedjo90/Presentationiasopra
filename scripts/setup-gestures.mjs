@@ -1,7 +1,7 @@
 // Copie les fichiers WASM de MediaPipe dans public/mediapipe/wasm et télécharge
 // le modèle de détection de mains (si absent) pour un fonctionnement hors ligne.
 // Ne fait jamais échouer l'installation : les gestes sont optionnels.
-import { cpSync, existsSync, mkdirSync, writeFileSync, statSync } from 'node:fs';
+import { copyFileSync, existsSync, mkdirSync, writeFileSync, statSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -15,7 +15,8 @@ const MODEL_URL =
 try {
   if (existsSync(src)) {
     mkdirSync(dst, { recursive: true });
-    cpSync(src, dst, { recursive: true });
+    // WASM SIMD uniquement (tous les navigateurs actuels) : allège le site publié
+    for (const f of ['vision_wasm_internal.js', 'vision_wasm_internal.wasm']) copyFileSync(resolve(src, f), resolve(dst, f));
     console.log('[gestes] WASM MediaPipe copié dans public/mediapipe/wasm');
   }
 } catch (e) {

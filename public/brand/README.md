@@ -20,7 +20,7 @@ public/brand/fonts/HurmeGeometricSans3-Bold.woff2
 public/brand/fonts/HurmeGeometricSans4-SemiBold.woff2
 ```
 
-Ils sont déclarés dans `src/theme/theme.css` et seront utilisés automatiquement ;
+Puis décommenter le bloc `@font-face` en tête de `src/theme/theme.css` ;
 sinon la présentation retombe sur **Outfit** (géométrique, libre, embarquée hors ligne).
 
 Pour remplacer toute la charte en une fois : modifier uniquement `src/theme/theme.css`.

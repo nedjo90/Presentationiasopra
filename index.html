@@ -2,21 +2,12 @@
 <html lang="fr">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Hello, Claude — Sopra Steria</title>
-    <link rel="icon" href="data:," />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Redirection vers la présentation construite (dossier docs/) -->
+    <script>location.replace('docs/' + location.search + location.hash);</script>
+    <meta http-equiv="refresh" content="0; url=docs/" />
+    <style>body{background:#000;color:#999;font-family:system-ui;display:grid;place-items:center;height:100vh;margin:0}a{color:#f67200}</style>
   </head>
-  <body>
-    <div id="viewport">
-      <div id="stage">
-        <canvas id="gl"></canvas>
-        <div id="layers"></div>
-        <div id="labels"></div>
-        <div id="overlays"></div>
-        <div id="blackout"></div>
-      </div>
-    </div>
-    <div id="hud"></div>
-    <script type="module" src="/src/main.js"></script>
-  </body>
+  <body><a href="docs/">Ouvrir la présentation</a></body>
 </html>
